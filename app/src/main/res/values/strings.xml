@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">WishlistAndroid</string>
+    <string name="button_addWishlist">Add Wishlist</string>
+    <string name="hint_wishlistTitle">Wishlist Title</string>
+    <string name="hint_wishlistdescription">Wishlist description</string>
 </resources>
