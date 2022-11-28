@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import org.wit.wishlistandroid.databinding.CardWishlistBinding
 import org.wit.wishlistandroid.models.WishlistModel
 
-class WishlistAdapter constructor(private var wishlists: List<WishlistModel>) :
+interface WishlistListener{
+    fun onWishlistClick(wishlist: WishlistModel)
+}
+
+class WishlistAdapter constructor(private var wishlists: List<WishlistModel>, private val listener: WishlistListener) :
     RecyclerView.Adapter<WishlistAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -17,7 +21,7 @@ class WishlistAdapter constructor(private var wishlists: List<WishlistModel>) :
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val wishlist = wishlists[holder.adapterPosition]
-        holder.bind(wishlist)
+        holder.bind(wishlist, listener)
     }
 
     override fun getItemCount(): Int = wishlists.size
@@ -25,9 +29,10 @@ class WishlistAdapter constructor(private var wishlists: List<WishlistModel>) :
     class MainHolder(private val binding : CardWishlistBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(wishlist: WishlistModel) {
+        fun bind(wishlist: WishlistModel, listener: WishlistListener) {
             binding.wishlistTitle.text = wishlist.title
             binding.description.text = wishlist.description
+            binding.root.setOnClickListener{listener.onWishlistClick(wishlist)}
         }
     }
 }

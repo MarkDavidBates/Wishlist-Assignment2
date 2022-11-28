@@ -12,8 +12,10 @@ import org.wit.wishlistandroid.R
 import org.wit.wishlistandroid.databinding.ActivityWishlistListBinding
 import org.wit.wishlistandroid.main.MainApp
 import org.wit.wishlistandroid.adapters.WishlistAdapter
+import org.wit.wishlistandroid.adapters.WishlistListener
+import org.wit.wishlistandroid.models.WishlistModel
 
-class WishlistListActivity : AppCompatActivity() {
+class WishlistListActivity : AppCompatActivity(), WishlistListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityWishlistListBinding
@@ -27,7 +29,7 @@ class WishlistListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = WishlistAdapter(app.wishlists.findAll())
+        binding.recyclerView.adapter = WishlistAdapter(app.wishlists.findAll(), this)
 
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -57,4 +59,17 @@ class WishlistListActivity : AppCompatActivity() {
                 notifyItemRangeChanged(0,app.wishlists.findAll().size)
             }
         }
+
+    override fun onWishlistClick(wishlist: WishlistModel) {
+        val launcherIntent = Intent(this, WishlistActivity::class.java)
+        getClickResult.launch(launcherIntent)
+    }
+
+    private val getClickResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){
+        if (it.resultCode == Activity.RESULT_OK){
+            (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.wishlists.findAll().size)
+        }
+    }
 }
