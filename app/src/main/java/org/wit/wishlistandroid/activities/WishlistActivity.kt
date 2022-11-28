@@ -2,6 +2,8 @@ package org.wit.wishlistandroid.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
 import org.wit.wishlistandroid.R
 import org.wit.wishlistandroid.databinding.ActivityWishlistBinding
@@ -22,8 +24,13 @@ class WishlistActivity : AppCompatActivity() {
         binding = ActivityWishlistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
+
         app = application as MainApp
         i("Wishlist Activity started...")
+
+
         binding.btnAdd.setOnClickListener() {
             wishlist.title = binding.wishlistTitle.text.toString()
             wishlist.description = binding.wishlistDescription.text.toString()
@@ -33,6 +40,8 @@ class WishlistActivity : AppCompatActivity() {
                 for (i in app.wishlists.indices){
                     i("Wishlist[$i]: ${this.app.wishlists[i]}")
                 }
+                setResult(RESULT_OK)
+                finish()
             }
             else {
                 Snackbar
@@ -40,5 +49,19 @@ class WishlistActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_wishlist, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

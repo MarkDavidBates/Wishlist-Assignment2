@@ -3,4 +3,6 @@
     <string name="button_addWishlist">Add Wishlist</string>
     <string name="hint_wishlistTitle">Wishlist Title</string>
     <string name="hint_wishlistdescription">Wishlist description</string>
+    <string name="menu_addWishlist">Add</string>
+    <string name="menu_cancelWishlist">Cancel</string>
 </resources>
