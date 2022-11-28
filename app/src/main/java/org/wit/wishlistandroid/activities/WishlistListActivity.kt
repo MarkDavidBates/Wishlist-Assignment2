@@ -4,18 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import org.wit.wishlistandroid.R
 import org.wit.wishlistandroid.databinding.ActivityWishlistListBinding
-import org.wit.wishlistandroid.databinding.CardWishlistBinding
 import org.wit.wishlistandroid.main.MainApp
-import org.wit.wishlistandroid.models.WishlistModel
+import org.wit.wishlistandroid.adapters.WishlistAdapter
 
 class WishlistListActivity : AppCompatActivity() {
 
@@ -61,31 +57,4 @@ class WishlistListActivity : AppCompatActivity() {
                 notifyItemRangeChanged(0,app.wishlists.size)
             }
         }
-}
-
-class WishlistAdapter constructor(private var wishlists: List<WishlistModel>) :
-    RecyclerView.Adapter<WishlistAdapter.MainHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        val binding = CardWishlistBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
-
-        return MainHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val wishlist = wishlists[holder.adapterPosition]
-        holder.bind(wishlist)
-    }
-
-    override fun getItemCount(): Int = wishlists.size
-
-    class MainHolder(private val binding : CardWishlistBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(wishlist: WishlistModel) {
-            binding.wishlistTitle.text = wishlist.title
-            binding.description.text = wishlist.description
-        }
-    }
 }
