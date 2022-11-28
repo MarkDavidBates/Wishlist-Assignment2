@@ -27,7 +27,7 @@ class WishlistListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = WishlistAdapter(app.wishlists)
+        binding.recyclerView.adapter = WishlistAdapter(app.wishlists.findAll())
 
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -54,7 +54,7 @@ class WishlistListActivity : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.wishlists.size)
+                notifyItemRangeChanged(0,app.wishlists.findAll().size)
             }
         }
 }

@@ -35,11 +35,7 @@ class WishlistActivity : AppCompatActivity() {
             wishlist.title = binding.wishlistTitle.text.toString()
             wishlist.description = binding.wishlistDescription.text.toString()
             if (wishlist.title.isNotEmpty() && wishlist.description.isNotEmpty()) {
-                i("add Button Pressed: ${wishlist.title} , ${wishlist.description}")
-                app.wishlists.add(wishlist.copy())
-                for (i in app.wishlists.indices){
-                    i("Wishlist[$i]: ${this.app.wishlists[i]}")
-                }
+                app.wishlists.create(wishlist.copy())
                 setResult(RESULT_OK)
                 finish()
             }
