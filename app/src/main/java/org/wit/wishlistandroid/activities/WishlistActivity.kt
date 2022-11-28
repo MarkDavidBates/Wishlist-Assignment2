@@ -31,6 +31,13 @@ class WishlistActivity : AppCompatActivity() {
         i("Wishlist Activity started...")
 
 
+        if(intent.hasExtra("wishlist_edit")){
+            wishlist = intent.extras?.getParcelable("wishlist_edit")!!
+            binding.wishlistTitle.setText(wishlist.title)
+            binding.wishlistDescription.setText(wishlist.description)
+        }
+
+
         binding.btnAdd.setOnClickListener() {
             wishlist.title = binding.wishlistTitle.text.toString()
             wishlist.description = binding.wishlistDescription.text.toString()

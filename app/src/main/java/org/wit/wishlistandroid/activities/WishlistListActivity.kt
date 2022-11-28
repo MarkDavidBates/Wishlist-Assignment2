@@ -62,6 +62,7 @@ class WishlistListActivity : AppCompatActivity(), WishlistListener {
 
     override fun onWishlistClick(wishlist: WishlistModel) {
         val launcherIntent = Intent(this, WishlistActivity::class.java)
+        launcherIntent.putExtra("wishlist_edit", wishlist)
         getClickResult.launch(launcherIntent)
     }
 

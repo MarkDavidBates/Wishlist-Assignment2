@@ -1,3 +1,9 @@
 package org.wit.wishlistandroid.models
 
-data class WishlistModel(var title: String = "", var description: String = "")
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class WishlistModel(var id: Long = 0,
+                         var title: String = "",
+                         var description: String = "") : Parcelable
