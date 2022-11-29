@@ -1,12 +1,17 @@
 package org.wit.wishlistandroid.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import org.wit.wishlistandroid.R
 import org.wit.wishlistandroid.databinding.ActivityWishlistBinding
+import org.wit.wishlistandroid.helpers.showImagePicker
 import org.wit.wishlistandroid.main.MainApp
 import org.wit.wishlistandroid.models.WishlistModel
 import timber.log.Timber
@@ -17,6 +22,7 @@ class WishlistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWishlistBinding
     var wishlist = WishlistModel()
     lateinit var app : MainApp
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +44,9 @@ class WishlistActivity : AppCompatActivity() {
             binding.wishlistTitle.setText(wishlist.title)
             binding.wishlistDescription.setText(wishlist.description)
             binding.btnAdd.setText(R.string.save_wishlist)
+            Picasso.get()
+                .load(wishlist.image)
+                .into(binding.wishlistImage)
         }
 
 
@@ -58,6 +67,14 @@ class WishlistActivity : AppCompatActivity() {
             setResult(RESULT_OK)
             finish()
         }
+
+        binding.chooseImage.setOnClickListener {
+            i("Select image")
+            showImagePicker(imageIntentLauncher)
+        }
+
+        registerImagePickerCallback()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,5 +89,24 @@ class WishlistActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            wishlist.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(wishlist.image)
+                                .into(binding.wishlistImage)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }
