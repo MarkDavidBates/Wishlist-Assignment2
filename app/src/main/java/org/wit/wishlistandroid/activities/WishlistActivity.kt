@@ -17,6 +17,7 @@ class WishlistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWishlistBinding
     var wishlist = WishlistModel()
     lateinit var app : MainApp
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,25 +33,30 @@ class WishlistActivity : AppCompatActivity() {
 
 
         if(intent.hasExtra("wishlist_edit")){
+            edit = true
             wishlist = intent.extras?.getParcelable("wishlist_edit")!!
             binding.wishlistTitle.setText(wishlist.title)
             binding.wishlistDescription.setText(wishlist.description)
+            binding.btnAdd.setText(R.string.save_wishlist)
         }
 
 
         binding.btnAdd.setOnClickListener() {
             wishlist.title = binding.wishlistTitle.text.toString()
             wishlist.description = binding.wishlistDescription.text.toString()
-            if (wishlist.title.isNotEmpty() && wishlist.description.isNotEmpty()) {
-                app.wishlists.create(wishlist.copy())
-                setResult(RESULT_OK)
-                finish()
-            }
-            else {
-                Snackbar
-                    .make(it,"Please Enter a title", Snackbar.LENGTH_LONG)
+            if (wishlist.title.isEmpty() && wishlist.description.isEmpty()) {
+                Snackbar.make(it, R.string.enter_title, Snackbar.LENGTH_LONG)
                     .show()
             }
+            else {
+                if(edit){
+                    app.wishlists.update(wishlist.copy())
+                } else{
+                    app.wishlists.create(wishlist.copy())
+                }
+            }
+            setResult(RESULT_OK)
+            finish()
         }
     }
 

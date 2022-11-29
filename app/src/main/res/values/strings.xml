@@ -5,4 +5,7 @@
     <string name="hint_wishlistdescription">Wishlist description</string>
     <string name="menu_addWishlist">Add</string>
     <string name="menu_cancelWishlist">Cancel</string>
+    <string name="enter_title">Please Enter a title</string>
+    <string name="save_wishlist">Save Wishlist</string>
+    <string name="button_addImage"> Add Image </string>
 </resources>
