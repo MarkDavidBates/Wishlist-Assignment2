@@ -1,6 +1,7 @@
 package org.wit.wishlistandroid.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -47,6 +48,9 @@ class WishlistActivity : AppCompatActivity() {
             Picasso.get()
                 .load(wishlist.image)
                 .into(binding.wishlistImage)
+            if (wishlist.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_wishlist_image)
+            }
         }
 
 
@@ -72,8 +76,11 @@ class WishlistActivity : AppCompatActivity() {
             i("Select image")
             showImagePicker(imageIntentLauncher)
         }
-
         registerImagePickerCallback()
+
+        binding.wishlistLocation.setOnClickListener {
+            i ("Set Location Pressed")
+        }
 
     }
 
@@ -103,6 +110,7 @@ class WishlistActivity : AppCompatActivity() {
                             Picasso.get()
                                 .load(wishlist.image)
                                 .into(binding.wishlistImage)
+                            binding.chooseImage.setText(R.string.change_wishlist_image)
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

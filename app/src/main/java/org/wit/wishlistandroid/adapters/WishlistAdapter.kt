@@ -3,6 +3,7 @@ package org.wit.wishlistandroid.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.wishlistandroid.databinding.CardWishlistBinding
 import org.wit.wishlistandroid.models.WishlistModel
 
@@ -32,6 +33,7 @@ class WishlistAdapter constructor(private var wishlists: List<WishlistModel>, pr
         fun bind(wishlist: WishlistModel, listener: WishlistListener) {
             binding.wishlistTitle.text = wishlist.title
             binding.description.text = wishlist.description
+            Picasso.get().load(wishlist.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener{listener.onWishlistClick(wishlist)}
         }
     }

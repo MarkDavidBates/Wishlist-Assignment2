@@ -9,4 +9,8 @@
     <string name="save_wishlist">Save Wishlist</string>
     <string name="button_addImage"> Add Image </string>
     <string name="select_wishlist_image">Select wishlist image</string>
+    <string name="change_wishlist_image">Change Wishlist image</string>
+    <string name="button_location">Set Location</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>

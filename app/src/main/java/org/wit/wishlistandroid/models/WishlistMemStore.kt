@@ -26,6 +26,7 @@ class WishlistMemStore : WishlistStore{
         if (foundWishlist != null){
             foundWishlist.title = wishlist.title
             foundWishlist.description = wishlist.description
+            foundWishlist.image = wishlist.image
             logAll()
         }
     }
