@@ -27,7 +27,7 @@ class WishlistActivity : AppCompatActivity() {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     var edit = false
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    var location = Location(52.245696, -7.139102, 15f)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -77,11 +77,18 @@ class WishlistActivity : AppCompatActivity() {
 
         binding.chooseImage.setOnClickListener {
             i("Select image")
-            showImagePicker(imageIntentLauncher)
+            showImagePicker(imageIntentLauncher, this)
         }
         registerImagePickerCallback()
 
         binding.wishlistLocation.setOnClickListener {
+            var location = Location(52.245696, -7.139102, 15f)
+            if(wishlist.zoom != 0f){
+                location.lat = wishlist.lat
+                location.long = wishlist.long
+                location.zoom = wishlist.zoom
+            }
+
             val launcherIntent = Intent(this, MapActivity::class.java).putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
         }
@@ -111,7 +118,12 @@ class WishlistActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            wishlist.image = result.data!!.data!!
+
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            wishlist.image = image
+
                             Picasso.get()
                                 .load(wishlist.image)
                                 .into(binding.wishlistImage)
@@ -131,8 +143,11 @@ class WishlistActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
+                            wishlist.lat = location.lat
+                            wishlist.long = location.long
+                            wishlist.zoom = location.zoom
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

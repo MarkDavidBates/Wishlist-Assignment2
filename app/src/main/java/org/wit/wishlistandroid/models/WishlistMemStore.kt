@@ -1,6 +1,7 @@
 package org.wit.wishlistandroid.models
 
 import timber.log.Timber.i
+import timber.log.Timber.w
 
 var lastId = 0L
 
@@ -27,6 +28,9 @@ class WishlistMemStore : WishlistStore{
             foundWishlist.title = wishlist.title
             foundWishlist.description = wishlist.description
             foundWishlist.image = wishlist.image
+            foundWishlist.lat = wishlist.lat
+            foundWishlist.long = wishlist.long
+            foundWishlist.zoom = wishlist.zoom
             logAll()
         }
     }
