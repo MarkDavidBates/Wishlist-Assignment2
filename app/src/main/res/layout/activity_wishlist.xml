@@ -67,6 +67,12 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
+                <CalendarView
+                    android:id="@+id/wishlistDate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:minDate="01/01/2022"/>
+
                 <Button
                     android:id="@+id/chooseImage"
                     android:layout_width="match_parent"

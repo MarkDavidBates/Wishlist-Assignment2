@@ -2,12 +2,12 @@ package org.wit.wishlistandroid.activities
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.wishlistandroid.R
@@ -16,8 +16,8 @@ import org.wit.wishlistandroid.helpers.showImagePicker
 import org.wit.wishlistandroid.main.MainApp
 import org.wit.wishlistandroid.models.Location
 import org.wit.wishlistandroid.models.WishlistModel
-import timber.log.Timber
 import timber.log.Timber.i
+import java.text.SimpleDateFormat
 
 class WishlistActivity : AppCompatActivity() {
 
@@ -42,11 +42,13 @@ class WishlistActivity : AppCompatActivity() {
         i("Wishlist Activity started...")
 
 
+
         if(intent.hasExtra("wishlist_edit")){
             edit = true
             wishlist = intent.extras?.getParcelable("wishlist_edit")!!
             binding.wishlistTitle.setText(wishlist.title)
             binding.wishlistDescription.setText(wishlist.description)
+            binding.wishlistDate.setDate(wishlist.date)
             binding.btnAdd.setText(R.string.save_wishlist)
             Picasso.get()
                 .load(wishlist.image)
@@ -60,12 +62,14 @@ class WishlistActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             wishlist.title = binding.wishlistTitle.text.toString()
             wishlist.description = binding.wishlistDescription.text.toString()
+            wishlist.date = binding.wishlistDate.date
             if (wishlist.title.isEmpty() && wishlist.description.isEmpty()) {
                 Snackbar.make(it, R.string.enter_title, Snackbar.LENGTH_LONG)
                     .show()
             }
             else {
                 if(edit){
+
                     app.wishlists.update(wishlist.copy())
                 } else{
                     app.wishlists.create(wishlist.copy())
