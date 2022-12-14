@@ -45,7 +45,22 @@ class WishlistJSONStore(private val context: Context) : WishlistStore {
 
 
     override fun update(wishlist: WishlistModel) {
-        // todo
+        val wishlistsList = findAll() as ArrayList<WishlistModel>
+        var foundWishlist: WishlistModel? = wishlistsList.find { p -> p.id == wishlist.id }
+        if (foundWishlist != null) {
+            foundWishlist.title = wishlist.title
+            foundWishlist.description = wishlist.description
+            foundWishlist.image = wishlist.image
+            foundWishlist.lat = wishlist.lat
+            foundWishlist.long = wishlist.long
+            foundWishlist.zoom = wishlist.zoom
+        }
+        serialize()
+    }
+
+    override fun delete(wishlist: WishlistModel) {
+        wishlists.remove(wishlist)
+        serialize()
     }
 
     private fun serialize() {

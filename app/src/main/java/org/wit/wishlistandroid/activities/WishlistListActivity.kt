@@ -19,6 +19,7 @@ class WishlistListActivity : AppCompatActivity(), WishlistListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityWishlistListBinding
+    private var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,17 +61,20 @@ class WishlistListActivity : AppCompatActivity(), WishlistListener {
             }
         }
 
-    override fun onWishlistClick(wishlist: WishlistModel) {
+    override fun onWishlistClick(wishlist: WishlistModel, pos: Int) {
         val launcherIntent = Intent(this, WishlistActivity::class.java)
         launcherIntent.putExtra("wishlist_edit", wishlist)
+        position = pos
         getClickResult.launch(launcherIntent)
     }
 
-    private val getClickResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
+    private val getClickResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
     ){
         if (it.resultCode == Activity.RESULT_OK){
             (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.wishlists.findAll().size)
         }
+        else // Deleting
+            if (it.resultCode == 99)
+                    (binding.recyclerView.adapter)?.notifyItemRemoved(position)
     }
 }

@@ -7,4 +7,6 @@ interface WishlistStore {
     fun create(wishlist: WishlistModel)
 
     fun update(wishlist: WishlistModel)
+
+    fun delete(wishlist: WishlistModel)
 }

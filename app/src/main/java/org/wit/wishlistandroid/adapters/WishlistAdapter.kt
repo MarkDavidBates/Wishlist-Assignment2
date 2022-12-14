@@ -8,7 +8,7 @@ import org.wit.wishlistandroid.databinding.CardWishlistBinding
 import org.wit.wishlistandroid.models.WishlistModel
 
 interface WishlistListener{
-    fun onWishlistClick(wishlist: WishlistModel)
+    fun onWishlistClick(wishlist: WishlistModel, position: Int)
 }
 
 class WishlistAdapter constructor(private var wishlists: List<WishlistModel>, private val listener: WishlistListener) :
@@ -34,7 +34,7 @@ class WishlistAdapter constructor(private var wishlists: List<WishlistModel>, pr
             binding.wishlistTitle.text = wishlist.title
             binding.description.text = wishlist.description
             Picasso.get().load(wishlist.image).resize(200,200).into(binding.imageIcon)
-            binding.root.setOnClickListener{listener.onWishlistClick(wishlist)}
+            binding.root.setOnClickListener{listener.onWishlistClick(wishlist, adapterPosition)}
         }
     }
 }

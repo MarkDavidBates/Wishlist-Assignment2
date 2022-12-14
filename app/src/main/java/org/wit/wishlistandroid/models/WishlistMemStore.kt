@@ -35,6 +35,10 @@ class WishlistMemStore : WishlistStore{
         }
     }
 
+    override fun delete(wishlist: WishlistModel) {
+        wishlists.remove(wishlist)
+    }
+
     fun logAll(){
         wishlists.forEach{i("$it")}
     }
