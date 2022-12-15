@@ -8,6 +8,7 @@ import kotlinx.parcelize.Parcelize
 data class WishlistModel(var id: Long = 0,
                          var title: String = "",
                          var description: String = "",
+                         var attendees: String = "",
                          var date: Long = 0,
                          var image: Uri = Uri.EMPTY,
                          var lat: Double = 0.0,

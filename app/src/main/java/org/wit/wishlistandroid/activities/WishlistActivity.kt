@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.isDigitsOnly
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import org.wit.wishlistandroid.R
@@ -48,6 +49,7 @@ class WishlistActivity : AppCompatActivity() {
             wishlist = intent.extras?.getParcelable("wishlist_edit")!!
             binding.wishlistTitle.setText(wishlist.title)
             binding.wishlistDescription.setText(wishlist.description)
+            binding.wishlistAttendees.setText(wishlist.attendees)
             binding.wishlistDate.setDate(wishlist.date)
             binding.btnAdd.setText(R.string.save_wishlist)
             Picasso.get()
@@ -62,8 +64,9 @@ class WishlistActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             wishlist.title = binding.wishlistTitle.text.toString()
             wishlist.description = binding.wishlistDescription.text.toString()
+            wishlist.attendees = binding.wishlistAttendees.text.toString()
             wishlist.date = binding.wishlistDate.date
-            if (wishlist.title.isEmpty() && wishlist.description.isEmpty()) {
+            if (wishlist.title.isEmpty() && wishlist.description.isEmpty() && wishlist.attendees.isDigitsOnly()) {
                 Snackbar.make(it, R.string.enter_title, Snackbar.LENGTH_LONG)
                     .show()
             }
