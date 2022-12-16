@@ -17,4 +17,5 @@
     <string name="menu_deleteWishlist">Delete</string>
     <string name="hint_wishlistemail">Email</string>
     <string name="hint_wishlistpassword">Password</string>
+    <string name="enter_valid_password">Please Enter a valid password</string>
 </resources>

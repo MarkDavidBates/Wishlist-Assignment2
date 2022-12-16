@@ -15,6 +15,8 @@ import com.google.firebase.ktx.Firebase
 import org.wit.wishlistandroid.adapters.WishlistAdapter
 import org.wit.wishlistandroid.databinding.ActivityWishlistSigninBinding
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import org.wit.wishlistandroid.R
 import timber.log.Timber.i
 
 class SignInActivity : AppCompatActivity() {
@@ -35,26 +37,30 @@ class SignInActivity : AppCompatActivity() {
         binding.button3.setOnClickListener()
         {
 
-            if(EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches() && binding.password.text.toString().length > 5)
+            if(binding.password.text.toString().length > 5)
             {
                 signIn(binding.email.text.toString(), binding.password.text.toString());
             }
             else
             {
-                i("Invalid Signin Input")
+                Snackbar.make(it, R.string.enter_valid_password, Snackbar.LENGTH_LONG)
+                    .show()
+                i("Invalid Password")
             }
         }
 
         binding.button2.setOnClickListener()
         {
 
-            if(EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches() && binding.password.text.toString().length > 5)
+            if(binding.password.text.toString().length > 5)
             {
                 createAccount(binding.email.text.toString(), binding.password.text.toString());
             }
             else
             {
-                i("Invalid Signin Input")
+                Snackbar.make(it, R.string.enter_valid_password, Snackbar.LENGTH_LONG)
+                    .show()
+                i("Invalid Password")
             }
         }
     }
